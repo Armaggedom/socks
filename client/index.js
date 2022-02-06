@@ -15,7 +15,7 @@ rl.question('your username: ', (aswer)=> {
 })
 function server(user) {
 	client.connect(4000, '127.0.0.1', ()=> {
-		console.log('Conection [Online]')
+		console.log('Conection [Pré-Online] \nEnvie uma mensagem simples para linkarmos seu usuário com seu ID')
 		rl.addListener('line', line=> {client.write(user.username+': '+line)})
 		client.on('data', data=> {
 			const str=data.toString()
