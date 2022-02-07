@@ -1,5 +1,10 @@
 const setTitle=require('node-bash-title')
+const readline=require('readline')
 const net=require('net')
+const rl=readline.createInterface({
+	input: process.stdin,
+	output: process.stdout
+})
 setTitle('💽 Server')
 var bloq=false;
 var socketClient=[]
@@ -60,16 +65,22 @@ function Command(socket, splited, str) {
 	}
 	// no command
 	else {
-		if(splited[0]===clients.client1) {socketClient[1].write(str)}
-		else {socketClient[0].write(str)}
+		if(splited[0]===clients.client1) {socketClient[1].write('\x1b[33m'+str+'\x1b[0m')}
+		else {socketClient[0].write('\x1b[33m'+str+'\x1b[0m')}
 	}
 }
+// main
 const server=net.createServer(handleConnection)
 server.maxConnections=2
-server.listen(4000, '127.0.0.1', ()=>{
-	console.clear()
-	console.log('---------------------------------------------------')
-	console.log('Opened server on', server.address())
-	console.log('Server Info: \nVersion: 2.0.0  \nDirect connection: YES \n Reconection: NO\nMessages loged: YES \nAdmin: NO')
-	console.log('-------------------- [CARDIAL] -------------------- \n\n')
+rl.question('Inser IP: ', (aswer)=> {
+	server.listen(4000, aswer, ()=>{
+		console.clear()
+		console.log('---------------------------------------------------')
+		console.log('Opened server on', server.address())
+		console.log('Server Info: \nVersion: 2.0.1  \nDirect connection: YES \n Reconection: NO\nMessages loged: YES \nAdmin: NO')
+		console.log('Client Info: \nVersion: 2.0.0')
+		console.log('Ip Info: \nWifi Connection: undefined \nIP locate: undefined')
+		console.log('-------------------- [CARDIAL] -------------------- \n\n')
+	})
+	rl.close()
 })

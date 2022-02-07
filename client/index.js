@@ -7,14 +7,15 @@ const rl=readline.createInterface({
 	input: process.stdin,
 	output: process.stdout
 })
+const IPPre=undefined
 //-----
 rl.question('your username: ', (aswer)=> {
 	console.clear()
 	var user={'username': aswer}
 	Interface(user)
 })
-function server(user) {
-	client.connect(4000, '127.0.0.1', ()=> {
+function server(user, ip) {
+	client.connect(4000, ip, ()=> {
 		console.log('Conection [Pré-Online] \nEnvie uma mensagem simples para linkarmos seu usuário com seu ID')
 		rl.addListener('line', line=> {client.write(user.username+': '+line)})
 		client.on('data', data=> {
@@ -32,7 +33,23 @@ function Interface(user) {
 	rl.question('1- connect to server                2- close aplication\n', (aswer)=> {
 		switch(aswer) {
 			case '1': 
-				server(user)
+				rl.question('\t 1- Usar IP Pré definido: ('+IPPre+') Escola: DS \n \t Ip Personalizado? \n', (aswer)=>{
+					if(aswer==='1') {
+						if(IPPre===undefined) {
+							console.log('IP Pré definido ainda não está disponível')
+						}
+						else {
+
+						}
+					}
+					else if(aswer==='2') {
+						rl.question('Digíte o IP: ', (ip)=>{server(user, ip)})
+					}
+					else {
+						return console.log('isso não é uma opção válida')
+					}
+				})
+				//server(user)
 			break;
 			case '2':
 				rl.close()
